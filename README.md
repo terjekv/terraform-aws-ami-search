@@ -3,6 +3,11 @@ AWS AMI SEARCH Terraform module
 
 Terraform module to find the last version of an AWS Ami IDs for working region, using common os name.
 
+Compatibility
+--------
+
+AWS AMI SEARCH Terraform module is incompatible with terraform 0.11 and earlier.
+
 Usage
 --------
 
@@ -51,7 +56,7 @@ module "ami-search" {
 }
 
 resource "aws_instance" "web" {
-  ami = "${module.ami-search.ami_id}"
+  ami = module.ami-search.ami_id
   instance_type = "t2.micro"
 
   tags {
