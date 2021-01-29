@@ -3,10 +3,16 @@ AWS AMI SEARCH Terraform module
 
 Terraform module to find the last version of an AWS Ami IDs for working region, using common os name.
 
-Compatibility
+Why this repository and not the original one ?
 --------
 
-AWS AMI SEARCH Terraform module is incompatible with terraform 0.11 and earlier.
+The [original repo](https://github.com/otassetti/terraform-aws-ami-search) has a PR with compatibility with Terraform >= 0.12 since September 2020 and not accepted. The original author seems not active on Github since 2019.
+
+Terraform versions
+--------
+Terraform 0.12 and later. Pin module version to ~> v1.0. Submit pull-requests to master branch.
+
+Terraform 0.11. Pin module version to ~> v0.1. Submit pull-requests to terraform011 branch.
 
 Usage
 --------
