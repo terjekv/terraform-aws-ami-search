@@ -24,7 +24,6 @@ For distributions that do not use these exact architecture names, the module wil
 
 Version support depends wholly on the distribution in question. See [the source code](variables.tf) for details.
 ## Examples
---------
 
 ```hcl
 module "ami-search" {
