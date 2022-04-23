@@ -1,89 +1,73 @@
-AWS AMI SEARCH Terraform module
-=================================
+# AWS AMI SEARCH Terraform module
 
-Terraform module to find the last version of an AWS Ami IDs for working region, using common os name.
+This terraform module finds the most recent AWS AMI for a specific linux distribution, optionally filtered by version and architecture.  
 
-Why this repository and not the original one ?
---------
+## Supported distributions:
 
-The [original repo](https://github.com/otassetti/terraform-aws-ami-search) has a PR with compatibility with Terraform >= 0.12 since September 2020 and not accepted. The original author seems not active on Github since 2019.
+* amazon (incomplete)
+* debian (incomplete)
+* fedora (incomplete)
+* centos
+* ubuntu
+* rhel
+* rocky
+* suse (incomplete)
 
-Terraform versions
---------
-Terraform 0.12 and later. Pin module version to ~> v1.0. Submit pull-requests to master branch.
+## Supported architectures
 
-Terraform 0.11. Pin module version to ~> v0.1. Submit pull-requests to terraform011 branch.
+* x86_64
+* arm64
 
-Usage
---------
+For distributions that do not use these exact architecture names, the module will map the name above to the whichever local naming scheme the distribution uses. Ie, if x86_64 is requested as the architecture for debian or one of its derivatives, the module will transparently map this to `amd64`.
 
-Set the 'os' var from the below list:
+## Supported versions
 
-``` bash
-# Linux
-ubuntu -> ubuntu-16.04
-ubuntu-14.04
-ubuntu-16.04
-centos -> centos-7
-centos-6
-centos-7
-centos-8
-rhel -> rhel-7
-rhel-6
-rhel-7
-rhel-8
-debian -> debian-9
-debian-8
-debian-9
-debian-10
-fedora-27
-amazon
-amazon-2_lts
-suse-les -> suse-les-12
-suse-les-12
-
-
-# Windows
-windows -> windows-2019-base
-windows-2019-base
-windows-2016-base
-windows-2012-r2-base
-windows-2012-base
-windows-2008-r2-base
-```
-
-Examples
+Version support depends wholly on the distribution in question. See [the source code](variables.tf) for details.
+## Examples
 --------
 
 ```hcl
 module "ami-search" {
-  source  = "otassetti/ami-search/aws"
-  os = "centos-7"
+  source  = "terjekv/ami-search/aws"
+  os = "rhel"
+  os_version = "8" # optional, see variables.tf for defaults
+  architecture = "arm64" # optional, defaults to x86_64
 }
 
 resource "aws_instance" "web" {
   ami = module.ami-search.ami_id
-  instance_type = "t2.micro"
+  instance_type = "t4g.micro"
 
   tags {
     Name = "HelloWorld"
   }
 }
-
-
 ```
 
-Limitations
------------
+## Limitations
 
-* Hvm type only (Hardcoded in the filter module)
+* HVM type only (Hardcoded in the filter module)
+* Ubuntu only accepts .04-releases.
+* The user is responsible for matching the `instance_type` of the instance to the architecture of the ami.
+* No windows support as of yet.
 
-Authors
--------
 
-Module managed by [Olivier Tassetti].
+## Terraform versions supported
 
-License
--------
+Terraform 0.12 and later.
 
-Apache 2 Licensed. See LICENSE for full details.
+## Thanks
+
+The [original repo](https://github.com/otassetti/terraform-aws-ami-search) has a PR with compatibility with Terraform >= 0.12 since September 2020 and not accepted. The original author seems not active on Github since 2019.
+
+The [updated repo](https://github.com/DeLoWaN/terraform-aws-ami-search) added support for newer Terraforms.
+
+This rewrite adds generic support for release identifiers and architecture support. 
+
+## Authors
+
+Original module by [Olivier Tassetti]. Updated module by DeLoWaN. This version by Terje Kvernes.
+
+## License
+
+Apache 2 Licensed. See [LICENSE](LICENSE) for full details.

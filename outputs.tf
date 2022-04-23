@@ -1,7 +1,24 @@
+output "ami_search_string" {
+  description = "The AMI search string used to find the AMI."
+  value       = local.ami_string
+}
+
 output "ami_id" {
   description = "The AMI id result of the search"
   value       = data.aws_ami.search.id
 }
+
+output "ami_name" {
+  description = "The AMI name result of the search"
+  value       = data.aws_ami.search.name
+}
+
+
+output "ami" {
+  description = "The full AMI object as a result of the search"
+  value       = data.aws_ami.search
+}
+
 
 output "root_device_name" {
   description = "The device name of the root dev"
