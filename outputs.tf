@@ -13,6 +13,10 @@ output "ami_name" {
   value       = data.aws_ami.search.name
 }
 
+output "user_name" {
+  description = "The user name for the AMI"
+  value       = local.os_user_names[var.os]
+}
 
 output "ami" {
   description = "The full AMI object as a result of the search"

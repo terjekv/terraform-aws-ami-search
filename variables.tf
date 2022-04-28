@@ -26,6 +26,14 @@ locals {
     }
   }
 
+  os_user_names = {
+    "rhel" = "ec2-user",
+    "rocky" = "rocky",
+    "centos" = "ec2-user",
+    "ubuntu" = "ubuntu",
+    "debian" = "admin",
+  }
+  
   default_versions = {
     "rhel" = "8",
     "rocky" = "8",
